@@ -666,88 +666,31 @@ section { position: relative; }
     transform-origin: bottom;
     opacity: 0.55;
 }
-.orin-preview {
+.orin-preview-image {
     position: absolute;
-    left: 8%;
-    right: 8%;
-    top: 14%;
-    bottom: 18%;
-    border: 1px solid rgba(255, 176, 137, 0.24);
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.92;
+    transform: scale(1.01);
+    filter: saturate(0.95) contrast(1.04);
+}
+.v-orin-arc .tile-visual::before {
+    content: '';
+    position: absolute;
+    inset: 7% 6% 13%;
+    z-index: 1;
+    border: 1px solid rgba(255, 176, 137, 0.22);
     border-radius: 8px;
-    background: rgba(8, 5, 15, 0.72);
     box-shadow:
         0 26px 80px rgba(0, 0, 0, 0.38),
         0 0 60px rgba(255, 122, 77, 0.16),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    overflow: hidden;
     transform: perspective(900px) rotateX(5deg) rotateY(-7deg);
+    pointer-events: none;
 }
-.orin-preview::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 78% 20%, rgba(255, 122, 77, 0.32), transparent 18%),
-        linear-gradient(180deg, rgba(180, 122, 255, 0.16), transparent 44%);
-}
-.orin-preview-bar {
-    position: relative;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 0 14px;
-    border-bottom: 1px solid rgba(232, 228, 220, 0.08);
-    background: rgba(5, 3, 8, 0.56);
-}
-.orin-preview-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(232, 228, 220, 0.28);
-}
-.orin-preview-dot:nth-child(1) { background: #FF7A4D; }
-.orin-preview-dot:nth-child(2) { background: #FFB089; }
-.orin-preview-dot:nth-child(3) { background: #7AB8FF; }
-.orin-preview-title {
-    margin-left: auto;
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(232, 228, 220, 0.52);
-}
-.orin-preview-body {
-    position: relative;
-    height: calc(100% - 34px);
-    display: grid;
-    grid-template-columns: 34% 1fr;
-}
-.orin-preview-side {
-    border-right: 1px solid rgba(232, 228, 220, 0.08);
-    padding: 18px 14px;
-    background: rgba(5, 3, 8, 0.38);
-}
-.orin-preview-pill,
-.orin-preview-line {
-    height: 7px;
-    border-radius: 999px;
-    background: rgba(232, 228, 220, 0.14);
-    margin-bottom: 12px;
-}
-.orin-preview-pill {
-    width: 72%;
-    background: rgba(255, 176, 137, 0.42);
-}
-.orin-preview-main {
-    padding: 18px;
-    font-family: var(--mono);
-    font-size: clamp(0.52rem, 1.2vw, 0.72rem);
-    line-height: 1.75;
-    color: rgba(232, 228, 220, 0.72);
-}
-.orin-preview-main .accent { color: var(--arcturus-soft); }
-.orin-preview-main .dim { color: rgba(232, 228, 220, 0.36); }
 
 .v-axiom {
     --accent: #B47AFF;
@@ -1256,6 +1199,24 @@ footer {
         <div class="work-inner">
             <div class="work-grid">
 
+                <a class="tile v-orin-arc span-12 reveal" href="#" style="--accent:#FFB089">
+                    <div class="tile-visual">
+                        <img class="orin-preview-image" src="orin-hero.png" alt="" loading="lazy" decoding="async">
+                    </div>
+                    <div class="tile-overlay"></div>
+                    <div class="tile-arrow">↗</div>
+                    <div class="tile-content">
+                        <div class="tile-top">
+                            <span class="tile-id">TX—024 · feature</span>
+                            <span class="tile-cat">Marketing site &amp; product</span>
+                        </div>
+                        <div class="tile-bottom">
+                            <h3 class="tile-name">A terminal that <em>remembers&nbsp;you</em>.</h3>
+                            <div class="tile-meta">MMXXVI<br>Single-page launch</div>
+                        </div>
+                    </div>
+                </a>
+
                 <a class="tile v-halcyon span-7 reveal" href="#" style="--accent:#FFCC80">
                     <div class="tile-visual"></div>
                     <div class="tile-overlay"></div>
@@ -1316,45 +1277,6 @@ footer {
                         <div class="tile-bottom">
                             <h3 class="tile-name"><em>Cinder</em>&nbsp;&amp;&nbsp;Veil</h3>
                             <div class="tile-meta">MMXXIV<br>Perfumery</div>
-                        </div>
-                    </div>
-                </a>
-
-                <a class="tile v-orin-arc span-12 reveal" href="#" style="--accent:#FFB089">
-                    <div class="tile-visual">
-                        <div class="orin-preview" aria-hidden="true">
-                            <div class="orin-preview-bar">
-                                <span class="orin-preview-dot"></span>
-                                <span class="orin-preview-dot"></span>
-                                <span class="orin-preview-dot"></span>
-                                <span class="orin-preview-title">Orin</span>
-                            </div>
-                            <div class="orin-preview-body">
-                                <div class="orin-preview-side">
-                                    <div class="orin-preview-pill"></div>
-                                    <div class="orin-preview-line"></div>
-                                    <div class="orin-preview-line" style="width:82%"></div>
-                                    <div class="orin-preview-line" style="width:58%"></div>
-                                </div>
-                                <div class="orin-preview-main">
-                                    <div><span class="accent">~/orin-app</span> npm run dev</div>
-                                    <div class="dim">local session restored</div>
-                                    <div><span class="accent">project</span> remembered terminals</div>
-                                    <div class="dim">cursor blinking where you left it</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tile-overlay"></div>
-                    <div class="tile-arrow">↗</div>
-                    <div class="tile-content">
-                        <div class="tile-top">
-                            <span class="tile-id">TX—024 · feature</span>
-                            <span class="tile-cat">Marketing site &amp; product</span>
-                        </div>
-                        <div class="tile-bottom">
-                            <h3 class="tile-name">A terminal that <em>remembers&nbsp;you</em>.</h3>
-                            <div class="tile-meta">MMXXVI<br>Single-page launch</div>
                         </div>
                     </div>
                 </a>
@@ -1486,6 +1408,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
     const KEY = 'arc-bgm';
     const VOLUME = 0.35;
+    const FADE_MS = 3200;
 
     function readPref() {
         try {
@@ -1505,8 +1428,9 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
     let wanted = readPref() !== 'off';
     let unlocked = false;
+    let fadeToken = 0;
 
-    audio.volume = VOLUME;
+    audio.volume = 0;
     audio.loop   = true;
 
     function setUI(playing) {
@@ -1523,14 +1447,30 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     }
     setUI(false);
 
+    function fadeIn() {
+        const token = ++fadeToken;
+        const start = performance.now();
+        audio.volume = 0;
+
+        function tick(now) {
+            if (token !== fadeToken || audio.paused || audio.muted) return;
+            const t = Math.min((now - start) / FADE_MS, 1);
+            audio.volume = VOLUME * (1 - Math.pow(1 - t, 3));
+            if (t < 1) requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+    }
+
     async function tryPlay({ muted }) {
         audio.muted = muted;
-        audio.volume = VOLUME;
+        audio.volume = muted ? VOLUME : 0;
 
         try {
             await audio.play();
             if (!muted) {
                 unlocked = true;
+                fadeIn();
                 setUI(true);
                 detachUnlockListeners();
             } else {
@@ -1590,7 +1530,9 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
         } else {
             wanted = false;
             unlocked = false;
+            fadeToken++;
             audio.pause();
+            audio.volume = 0;
             setUI(false);
             detachUnlockListeners();
             writePref('off');
