@@ -188,27 +188,6 @@ nav.scrolled {
     justify-content: center;
     overflow: hidden;
 }
-.hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--whisper);
-    margin-bottom: 3.5rem;
-    padding-left: 0;
-}
-.hero-eyebrow .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--arcturus);
-    box-shadow: 0 0 8px var(--arcturus-glow);
-    animation: pulse 4s ease-in-out infinite;
-}
-.hero-eyebrow .sep { color: var(--dim); }
-
 .hero-title {
     font-family: var(--display);
     font-weight: 200;
@@ -229,83 +208,11 @@ nav.scrolled {
     letter-spacing: -0.035em;
     margin-top: 0.15em;
 }
-.hero-sound-star {
-    appearance: none;
-    border: 0;
-    background: transparent;
-    color: var(--arcturus);
-    font: inherit;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    display: inline-block;
-    position: relative;
-    padding: 0 0.04em;
-    margin: 0;
-    cursor: pointer;
-    transform: translateY(-0.05em);
-    text-shadow: 0 0 30px var(--arcturus-glow);
-    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
-}
-.hero-sound-star:hover,
-.hero-sound-star:focus-visible {
-    color: var(--arcturus-soft);
-    transform: translateY(-0.07em) scale(1.04);
-    text-shadow: 0 0 42px rgba(255, 122, 77, 0.58);
-    outline: none;
-}
-.hero-sound-star::before {
-    content: '';
-    position: absolute;
-    inset: 0.05em;
-    border-radius: 50%;
-    border: 1px solid currentColor;
-    opacity: 0;
-    transform: scale(0.78);
-    pointer-events: none;
-}
-.hero-sound-star.needs-sound::before {
-    animation: hero-signal-ring 2.6s ease-out infinite;
-}
-.hero-sound-star.is-playing::before {
-    opacity: 0.22;
-    transform: scale(1.15);
-}
-.hero-sound-star::after {
-    content: 'receive signal';
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 0.4rem);
-    transform: translateX(-50%) translateY(4px);
-    font-family: var(--mono);
-    font-size: clamp(0.42rem, 0.52vw, 0.58rem);
-    font-style: normal;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--arcturus-soft);
-    opacity: 0;
-    white-space: nowrap;
-    pointer-events: none;
-    transition: opacity 0.25s, transform 0.25s;
-    text-shadow: none;
-}
-.hero-sound-star:hover::after,
-.hero-sound-star:focus-visible::after {
-    opacity: 0.82;
-    transform: translateX(-50%) translateY(0);
-}
-@keyframes hero-signal-ring {
-    0%   { opacity: 0.34; transform: scale(0.82); }
-    100% { opacity: 0;    transform: scale(1.48); }
-}
 .hero-title .ln2 .star {
     color: var(--arcturus);
     font-style: normal;
     font-weight: 400;
     display: inline-block;
-    transform: translateY(-0.05em);
-    text-shadow: 0 0 30px var(--arcturus-glow);
 }
 .hero-title .ln2 .softer {
     color: var(--bone-soft);
@@ -422,8 +329,8 @@ section { position: relative; }
 }
 .work-grid {
     position: relative;
-    width: min(1120px, 82vw);
-    height: min(640px, 64vh);
+    width: min(860px, 64vw);
+    height: min(520px, 56vh);
     transform-style: preserve-3d;
 }
 .tile {
@@ -474,20 +381,26 @@ section { position: relative; }
 }
 .tile-top {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: start;
+    gap: 0.42rem;
     font-family: var(--mono);
     font-size: 0.66rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--bone-soft);
-    opacity: 0.85;
+    opacity: 1;
 }
 .tile-id { color: var(--bone-soft); }
-.tile-cat { color: var(--whisper); }
+.tile-kind {
+    color: var(--bone-soft);
+    font-size: 0.58rem;
+    opacity: 0.82;
+}
 .tile-bottom {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: end;
     gap: 1rem;
 }
@@ -502,15 +415,6 @@ section { position: relative; }
     max-width: 16ch;
 }
 .tile-name em { font-style: italic; font-weight: 400; }
-.tile-meta {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--whisper);
-    text-align: right;
-    line-height: 1.6;
-}
 .tile-arrow {
     position: absolute;
     top: 1.6rem; right: 1.6rem;
@@ -579,8 +483,7 @@ section { position: relative; }
 }
 .tile.v-loomwright .tile-name { color: #2B1F12; }
 .tile.v-loomwright .tile-id,
-.tile.v-loomwright .tile-cat,
-.tile.v-loomwright .tile-meta { color: #4A3724; }
+.tile.v-loomwright .tile-kind { color: #4A3724; }
 .tile.v-loomwright:hover .tile-name { color: #1A0E04; }
 
 .v-mira {
@@ -1042,24 +945,11 @@ footer {
     .nav-links { gap: 0.9rem; }
     .nav-links a:not(.nav-cta) { display: none; }
     .hero { padding: 6rem 1.5rem 3rem; min-height: 92svh; }
-    .hero-eyebrow {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 2.4rem;
-        font-size: 0.62rem;
-        line-height: 1.7;
-    }
     .hero-title {
         font-size: clamp(3.4rem, 18vw, 7rem);
         line-height: 0.9;
         letter-spacing: -0.035em;
     }
-    .hero-sound-star {
-        min-width: 0.82em;
-        min-height: 0.82em;
-        touch-action: manipulation;
-    }
-    .hero-sound-star::after { display: none; }
     .hero-row { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
     .section-head {
         padding: 4rem 1.5rem 1.5rem;
@@ -1101,7 +991,6 @@ footer {
         align-items: start;
         flex-direction: column;
     }
-    .tile-meta { text-align: left; }
     .capabilities { padding: 2.2rem 1.5rem; }
     .cap-inner { gap: 1.2rem; align-items: start; }
     .cap-list { font-size: clamp(1.4rem, 9vw, 2.5rem); }
@@ -1150,17 +1039,9 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-    <div class="hero-eyebrow reveal">
-        <span class="dot"></span>
-        <span>Est. 2026</span>
-        <span class="sep">/</span>
-        <span>α Boötis · 36.7 ly</span>
-        <span class="sep">/</span>
-        <span>By transmission only</span>
-    </div>
     <h1 class="hero-title reveal">
         <span class="ln1">Arcturian</span>
-        <span class="ln2">studios <button class="hero-sound-star" id="heroSoundStar" type="button" aria-label="Play background music">✦</button></span>
+        <span class="ln2">studios <span class="star">✦</span></span>
     </h1>
     <div class="hero-row">
         <p class="hero-tag reveal">
@@ -1199,12 +1080,11 @@ footer {
                     <div class="tile-arrow">↗</div>
                     <div class="tile-content">
                         <div class="tile-top">
-                            <span class="tile-id">TX—024 · feature</span>
-                            <span class="tile-cat">Marketing site &amp; product</span>
+                            <span class="tile-id">Orin</span>
+                            <span class="tile-kind">APP &amp; WEBSITE</span>
                         </div>
                         <div class="tile-bottom">
                             <h3 class="tile-name">A terminal that <em>remembers&nbsp;you</em>.</h3>
-                            <div class="tile-meta">MMXXVI<br>Single-page launch</div>
                         </div>
                     </div>
                 </a>
@@ -1215,12 +1095,11 @@ footer {
                     <div class="tile-arrow">↗</div>
                     <div class="tile-content">
                         <div class="tile-top">
-                            <span class="tile-id">TX—047</span>
-                            <span class="tile-cat">Dashboard</span>
+                            <span class="tile-id">Halcyon Capital</span>
+                            <span class="tile-kind">DASHBOARD</span>
                         </div>
                         <div class="tile-bottom">
                             <h3 class="tile-name"><em>Halcyon</em>&nbsp;Capital</h3>
-                            <div class="tile-meta">MMXXVI<br>Private desk</div>
                         </div>
                     </div>
                 </a>
@@ -1231,12 +1110,11 @@ footer {
                     <div class="tile-arrow" style="color:#2B1F12;border-color:rgba(40,25,10,0.3)">↗</div>
                     <div class="tile-content">
                         <div class="tile-top">
-                            <span class="tile-id">TX—042</span>
-                            <span class="tile-cat">Brand · Commerce</span>
+                            <span class="tile-id">Loomwright</span>
+                            <span class="tile-kind">BRAND &amp; COMMERCE</span>
                         </div>
                         <div class="tile-bottom">
                             <h3 class="tile-name"><em>Loomwright</em></h3>
-                            <div class="tile-meta">MMXXV<br>Atelier</div>
                         </div>
                     </div>
                 </a>
@@ -1247,12 +1125,11 @@ footer {
                     <div class="tile-arrow">↗</div>
                     <div class="tile-content">
                         <div class="tile-top">
-                            <span class="tile-id">TX—038</span>
-                            <span class="tile-cat">Realtime ops</span>
+                            <span class="tile-id">Mira Telemetry</span>
+                            <span class="tile-kind">REALTIME OPS</span>
                         </div>
                         <div class="tile-bottom">
                             <h3 class="tile-name">Mira&nbsp;<em>Telemetry</em></h3>
-                            <div class="tile-meta">MMXXV<br>Ground station</div>
                         </div>
                     </div>
                 </a>
@@ -1263,12 +1140,11 @@ footer {
                     <div class="tile-arrow">↗</div>
                     <div class="tile-content">
                         <div class="tile-top">
-                            <span class="tile-id">TX—031</span>
-                            <span class="tile-cat">Storefront</span>
+                            <span class="tile-id">Cinder &amp; Veil</span>
+                            <span class="tile-kind">STOREFRONT</span>
                         </div>
                         <div class="tile-bottom">
                             <h3 class="tile-name"><em>Cinder</em>&nbsp;&amp;&nbsp;Veil</h3>
-                            <div class="tile-meta">MMXXIV<br>Perfumery</div>
                         </div>
                     </div>
                 </a>
@@ -1279,12 +1155,11 @@ footer {
                     <div class="tile-arrow">↗</div>
                     <div class="tile-content">
                         <div class="tile-top">
-                            <span class="tile-id">TX—019</span>
-                            <span class="tile-cat">Product · SaaS</span>
+                            <span class="tile-id">Axiom Labs</span>
+                            <span class="tile-kind">PRODUCT &amp; SAAS</span>
                         </div>
                         <div class="tile-bottom">
                             <h3 class="tile-name"><em>Axiom</em>&nbsp;Labs</h3>
-                            <div class="tile-meta">MMXXIV<br>Developer tooling</div>
                         </div>
                     </div>
                 </a>
@@ -1295,12 +1170,11 @@ footer {
                     <div class="tile-arrow">↗</div>
                     <div class="tile-content">
                         <div class="tile-top">
-                            <span class="tile-id">TX—012</span>
-                            <span class="tile-cat">Editorial</span>
+                            <span class="tile-id">North Field</span>
+                            <span class="tile-kind">EDITORIAL</span>
                         </div>
                         <div class="tile-bottom">
                             <h3 class="tile-name">North&nbsp;<em>Field</em></h3>
-                            <div class="tile-meta">MMXXIII<br>Long-form journal</div>
                         </div>
                     </div>
                 </a>
@@ -1414,20 +1288,20 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
         const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
         const progress = clamp(-rect.top / travel, 0, 1) * (cards.length - 1);
         const viewport = Math.min(window.innerWidth, window.innerHeight);
-        const radius = clamp(viewport * 0.42, 280, 520);
-        const depth = clamp(viewport * 0.34, 240, 460);
+        const radius = clamp(viewport * 0.58, 500, 760);
+        const depth = clamp(viewport * 0.58, 460, 760);
 
         cards.forEach((card, i) => {
             const offset = i - progress;
-            const angle = offset * 62;
+            const angle = offset * 64;
             const rad = angle * Math.PI / 180;
             const x = Math.sin(rad) * radius;
-            const y = offset * 82;
+            const y = offset * 142;
             const z = Math.cos(rad) * depth - depth;
             const distance = Math.abs(offset);
-            const scale = clamp(1 - distance * 0.085, 0.7, 1);
-            const opacity = clamp(1 - distance * 0.18, 0.16, 1);
-            const blur = Math.min(distance * 1.2, 5);
+            const scale = clamp(1 - distance * 0.16, 0.5, 1);
+            const opacity = clamp(1 - distance * 0.36, 0.05, 1);
+            const blur = Math.min(distance * 2.2, 8);
 
             card.style.transform = [
                 `translate3d(${x}px, ${y}px, ${z}px)`,
@@ -1462,7 +1336,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 (function () {
     const audio  = document.getElementById('bgm');
     const button = document.getElementById('sndBtn');
-    const heroStar = document.getElementById('heroSoundStar');
     if (!audio || !button) return;
 
     const KEY = 'arc-bgm';
@@ -1497,12 +1370,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
         button.classList.toggle('muted',  !playing);
         button.setAttribute('aria-pressed', playing ? 'true' : 'false');
         if (playing) button.classList.remove('prompt');
-        if (heroStar) {
-            heroStar.classList.toggle('is-playing', playing);
-            heroStar.classList.toggle('needs-sound', wanted && !playing);
-            heroStar.setAttribute('aria-pressed', playing ? 'true' : 'false');
-            heroStar.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
-        }
     }
     setUI(false);
 
@@ -1547,7 +1414,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     const activationEvents = ['pointerdown', 'mousedown', 'keydown', 'touchend'];
     const softEvents = ['wheel', 'scroll'];
     function isSoundControlTarget(target) {
-        return target && target.closest && target.closest('#sndBtn, #heroSoundStar');
+        return target && target.closest && target.closest('#sndBtn');
     }
     async function unlockFromUserEvent(e) {
         if (isSoundControlTarget(e.target)) return;
@@ -1599,7 +1466,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     }
 
     button.addEventListener('click', toggleFromGesture);
-    if (heroStar) heroStar.addEventListener('click', toggleFromGesture);
 
     // NOTE: no visibilitychange handler — music keeps playing
     // when you switch windows or tabs.
@@ -1619,7 +1485,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
     const isCoarse = window.matchMedia('(pointer: coarse)').matches;
     let W = 0, H = 0, stars = [], rafId = null;
-    let mouseX = 0, mouseY = 0, targetMX = 0, targetMY = 0;
+    let vortexT = Math.random() * Math.PI * 2;
 
     function resize() {
         W = window.innerWidth; H = window.innerHeight;
@@ -1634,14 +1500,18 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
         const targetCount = isCoarse ? 80 : Math.min(200, Math.floor((W * H) / 8500));
         stars = [];
         for (let i = 0; i < targetCount; i++) {
+            const orbit = Math.random();
+            const angle = Math.random() * Math.PI * 2;
             stars.push({
-                x: Math.random() * W,
-                y: Math.random() * H,
+                orbit,
+                angle,
+                arm: Math.floor(Math.random() * 4),
                 z: Math.random() * 1 + 0.2,
                 r: Math.random() * 0.9 + 0.2,
                 tw: Math.random() * Math.PI * 2,
                 tws: Math.random() * 0.015 + 0.005,
-                drift: (Math.random() - 0.5) * 0.04,
+                spin: 0.00045 + Math.random() * 0.0013,
+                lift: (Math.random() - 0.5) * 0.18,
                 tint: Math.random() < 0.92 ? 'bone' : (Math.random() < 0.5 ? 'arc' : 'aur')
             });
         }
@@ -1649,15 +1519,23 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
     function render() {
         ctx.clearRect(0, 0, W, H);
-        mouseX += (targetMX - mouseX) * 0.06;
-        mouseY += (targetMY - mouseY) * 0.06;
+        vortexT += 0.0032;
+        const cx = W * 0.56;
+        const cy = H * 0.48;
+        const maxR = Math.hypot(W, H) * 0.58;
         for (const s of stars) {
             s.tw += s.tws;
-            s.x += s.drift;
-            if (s.x < -2) s.x = W + 2;
-            if (s.x > W + 2) s.x = -2;
-            const px = s.x + mouseX * s.z * 14;
-            const py = s.y + mouseY * s.z * 14;
+            s.angle += s.spin * (1.8 - s.orbit);
+            const spiral = s.angle + s.arm * Math.PI * 0.5 + vortexT * (0.75 + s.z * 0.18);
+            const wave = Math.sin(vortexT * 1.4 + s.angle * 2.2) * 0.035;
+            s.orbit += 0.00012 + s.lift * 0.00004;
+            if (s.orbit > 1.08) s.orbit = 0.05;
+            if (s.orbit < 0.03) s.orbit = 1;
+
+            const radius = maxR * Math.pow(Math.max(s.orbit + wave, 0.02), 1.18);
+            const squeeze = 0.48 + s.z * 0.2;
+            const px = cx + Math.cos(spiral) * radius;
+            const py = cy + Math.sin(spiral) * radius * squeeze + Math.sin(vortexT + s.angle) * 12 * s.z;
             const flick = 0.6 + 0.4 * Math.sin(s.tw);
             const a = (0.35 + 0.55 * flick) * s.z;
             let color;
@@ -1683,13 +1561,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
         resizeT = setTimeout(() => { resize(); spawn(); }, 120);
     });
     document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-
-    if (!isCoarse) {
-        window.addEventListener('mousemove', (e) => {
-            targetMX = (e.clientX / W - 0.5) * 2;
-            targetMY = (e.clientY / H - 0.5) * 2;
-        }, { passive: true });
-    }
 })();
 </script>
 </body>
