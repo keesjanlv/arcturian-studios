@@ -956,32 +956,29 @@ footer {
         align-items: start;
     }
     .work {
-        min-height: auto;
-        padding: 0 1.5rem 4rem;
+        min-height: calc(var(--project-count) * 88vh);
+        padding: 0 1rem;
     }
     .work-inner {
-        height: auto;
-        position: relative;
-        top: auto;
-        display: block;
-        perspective: none;
+        height: 88svh;
+        position: sticky;
+        top: 6svh;
+        display: grid;
+        place-items: center;
+        perspective: 980px;
+        perspective-origin: 50% 44%;
     }
     .work-grid {
-        width: 100%;
-        height: auto;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
-        transform: none !important;
+        width: min(78vw, 620px);
+        height: min(52vh, 520px);
+        position: relative;
+        display: block;
+        transform-style: preserve-3d;
     }
     .tile {
-        position: relative;
-        inset: auto;
-        aspect-ratio: 4 / 3 !important;
-        min-height: 260px;
-        transform: none !important;
-        opacity: 1 !important;
-        filter: none !important;
+        position: absolute;
+        inset: 0;
+        min-height: 0;
     }
     .tile.span-7, .tile.span-5, .tile.span-6, .tile.span-4, .tile.span-8, .tile.span-12 {
         grid-column: span 1;
@@ -1002,6 +999,31 @@ footer {
     }
     .footer-inner { grid-template-columns: 1fr; gap: 1.3rem; text-align: center; }
     .footer-mark, .footer-meta, .footer-coords { justify-content: center; text-align: center; }
+}
+@media (max-width: 520px) {
+    .work {
+        min-height: calc(var(--project-count) * 86vh);
+        padding: 0 0.75rem;
+    }
+    .work-inner {
+        height: 82svh;
+        top: 10svh;
+        perspective: 760px;
+    }
+    .work-grid {
+        width: min(72vw, 320px);
+        height: min(48vh, 430px);
+    }
+    .tile-content { padding: 1.15rem; }
+    .tile-name { font-size: clamp(1.45rem, 8vw, 2.25rem); }
+    .tile-id { font-size: 0.58rem; }
+    .tile-kind { font-size: 0.5rem; }
+    .tile-arrow {
+        top: 1rem;
+        right: 1rem;
+        width: 32px;
+        height: 32px;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -1212,8 +1234,8 @@ footer {
             Send a<br>
             <em>transmission.</em>
         </h2>
-        <a href="https://arcturianstudios.com" class="intake-cta reveal">
-            arcturianstudios.com <span class="arrow">→</span>
+        <a href="mailto:om@arcturianstudios.com" class="intake-cta reveal">
+            om@arcturianstudios.com <span class="arrow">→</span>
         </a>
         <div class="intake-foot reveal">
             or <a href="#">book a 20 min call</a>
@@ -1264,7 +1286,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     if (!section || !stage || !cards.length) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isDesktop = () => window.matchMedia('(min-width: 901px)').matches && !reduceMotion;
     let ticking = false;
 
     function clamp(n, min, max) {
@@ -1274,7 +1295,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     function layout() {
         section.style.setProperty('--project-count', String(cards.length));
 
-        if (!isDesktop()) {
+        if (reduceMotion) {
             cards.forEach(card => {
                 card.style.transform = '';
                 card.style.opacity = '';
@@ -1288,20 +1309,34 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
         const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
         const progress = clamp(-rect.top / travel, 0, 1) * (cards.length - 1);
         const viewport = Math.min(window.innerWidth, window.innerHeight);
-        const radius = clamp(viewport * 0.58, 500, 760);
-        const depth = clamp(viewport * 0.58, 460, 760);
+        const isMobile = window.innerWidth <= 520;
+        const isTablet = window.innerWidth > 520 && window.innerWidth <= 900;
+        const radius = isMobile
+            ? clamp(viewport * 0.52, 230, 330)
+            : isTablet
+                ? clamp(viewport * 0.56, 340, 520)
+                : clamp(viewport * 0.58, 500, 760);
+        const depth = isMobile
+            ? clamp(viewport * 0.5, 220, 340)
+            : isTablet
+                ? clamp(viewport * 0.54, 330, 540)
+                : clamp(viewport * 0.58, 460, 760);
+        const turn = isMobile ? 56 : isTablet ? 60 : 64;
+        const verticalStep = isMobile ? 96 : isTablet ? 118 : 142;
+        const minScale = isMobile ? 0.48 : isTablet ? 0.5 : 0.5;
+        const fadeRate = isMobile ? 0.42 : isTablet ? 0.38 : 0.36;
 
         cards.forEach((card, i) => {
             const offset = i - progress;
-            const angle = offset * 64;
+            const angle = offset * turn;
             const rad = angle * Math.PI / 180;
             const x = Math.sin(rad) * radius;
-            const y = offset * 142;
+            const y = offset * verticalStep;
             const z = Math.cos(rad) * depth - depth;
             const distance = Math.abs(offset);
-            const scale = clamp(1 - distance * 0.16, 0.5, 1);
-            const opacity = clamp(1 - distance * 0.36, 0.05, 1);
-            const blur = Math.min(distance * 2.2, 8);
+            const scale = clamp(1 - distance * 0.16, minScale, 1);
+            const opacity = clamp(1 - distance * fadeRate, 0.05, 1);
+            const blur = Math.min(distance * (isMobile ? 2.6 : 2.2), isMobile ? 9 : 8);
 
             card.style.transform = [
                 `translate3d(${x}px, ${y}px, ${z}px)`,
