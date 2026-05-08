@@ -334,18 +334,6 @@ nav.scrolled {
     font-style: normal;
     font-weight: 400;
 }
-.hero-meta {
-    text-align: right;
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--whisper);
-    line-height: 2;
-}
-.hero-meta .key { color: var(--bone-soft); }
-.hero-meta .accent { color: var(--arcturus); }
-
 /* ─── Marquee strip ────────────────────────────────────────────── */
 .marquee {
     border-top: 1px solid var(--line);
@@ -415,42 +403,53 @@ section { position: relative; }
     color: var(--whisper);
 }
 
-/* ─── WORK GRID ────────────────────────────────────────────────── */
+/* ─── WORK HELIX ───────────────────────────────────────────────── */
 .work {
-    padding: 0 2.5rem 6rem;
+    --project-count: 7;
+    min-height: calc(var(--project-count) * 92vh);
+    padding: 0 2.5rem;
 }
 .work-inner {
     max-width: 1280px;
     margin: 0 auto;
+    height: 100svh;
+    position: sticky;
+    top: 0;
+    display: grid;
+    place-items: center;
+    perspective: 1400px;
+    perspective-origin: 50% 44%;
 }
 .work-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1.6rem;
-    grid-auto-flow: dense;
+    position: relative;
+    width: min(1120px, 82vw);
+    height: min(640px, 64vh);
+    transform-style: preserve-3d;
 }
 .tile {
-    position: relative;
+    position: absolute;
+    inset: 0;
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
-    aspect-ratio: 4 / 3;
     isolation: isolate;
     background: var(--void-1);
     border: 1px solid var(--line);
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-                border-color 0.4s;
+    transform-style: preserve-3d;
+    transition: border-color 0.4s, opacity 0.35s, filter 0.35s;
+    will-change: transform, opacity, filter;
 }
-.tile:hover { transform: translateY(-4px); border-color: var(--line-bright); }
+.work-grid .reveal { opacity: 1; transform: none; }
+.tile:hover { border-color: var(--line-bright); }
 .tile:hover .tile-name { color: var(--accent, var(--arcturus)); }
 .tile:hover .tile-arrow { opacity: 1; transform: translate(2px, -2px); }
 .tile:hover .tile-visual { transform: scale(1.04); }
-.tile.span-7 { grid-column: span 7; }
-.tile.span-5 { grid-column: span 5; }
-.tile.span-6 { grid-column: span 6; }
-.tile.span-4 { grid-column: span 4; }
-.tile.span-8 { grid-column: span 8; }
-.tile.span-12 { grid-column: span 12; aspect-ratio: 21 / 9; }
+.tile.span-7,
+.tile.span-5,
+.tile.span-6,
+.tile.span-4,
+.tile.span-8,
+.tile.span-12 { grid-column: auto; }
 
 .tile-visual {
     position: absolute;
@@ -802,28 +801,6 @@ section { position: relative; }
     margin: 0 auto;
     position: relative;
 }
-.intake-availability {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--whisper);
-    border: 1px solid var(--line-bright);
-    border-radius: 999px;
-    padding: 0.55rem 1.1rem;
-    margin-bottom: 3rem;
-}
-.intake-availability .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--arcturus);
-    box-shadow: 0 0 8px var(--arcturus-glow);
-    animation: pulse 4s ease-in-out infinite;
-}
-.intake-availability .open { color: var(--arcturus); font-weight: 500; }
 .intake-headline {
     font-family: var(--display);
     font-weight: 200;
@@ -1084,14 +1061,38 @@ footer {
     }
     .hero-sound-star::after { display: none; }
     .hero-row { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
-    .hero-meta { text-align: left; }
     .section-head {
         padding: 4rem 1.5rem 1.5rem;
         align-items: start;
     }
-    .work { padding: 0 1.5rem 4rem; }
-    .work-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-    .tile { aspect-ratio: 4 / 3 !important; min-height: 260px; }
+    .work {
+        min-height: auto;
+        padding: 0 1.5rem 4rem;
+    }
+    .work-inner {
+        height: auto;
+        position: relative;
+        top: auto;
+        display: block;
+        perspective: none;
+    }
+    .work-grid {
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        transform: none !important;
+    }
+    .tile {
+        position: relative;
+        inset: auto;
+        aspect-ratio: 4 / 3 !important;
+        min-height: 260px;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+    }
     .tile.span-7, .tile.span-5, .tile.span-6, .tile.span-4, .tile.span-8, .tile.span-12 {
         grid-column: span 1;
     }
@@ -1105,10 +1106,6 @@ footer {
     .cap-inner { gap: 1.2rem; align-items: start; }
     .cap-list { font-size: clamp(1.4rem, 9vw, 2.5rem); }
     .intake { padding: 5rem 1.5rem 6rem; }
-    .intake-availability {
-        flex-wrap: wrap;
-        line-height: 1.7;
-    }
     .intake-cta {
         max-width: 100%;
         overflow-wrap: anywhere;
@@ -1169,11 +1166,6 @@ footer {
         <p class="hero-tag reveal">
             A small <span class="em">interdimensional</span> development studio. We make <span class="em">websites</span>, <span class="em">dashboards</span> and <span class="em">products</span> for people who notice the difference.
         </p>
-        <div class="hero-meta reveal">
-            <div><span class="key">Q3</span> <span class="accent">— open</span></div>
-            <div><span class="key">02</span> of 03 places left</div>
-            <div><span class="key">↓</span> selected work</div>
-        </div>
     </div>
 </section>
 
@@ -1193,7 +1185,7 @@ footer {
             <span class="line"></span>
             <span>Selected transmissions</span>
         </div>
-        <div class="sec-cap reveal">2024 — 2026 / 6 of 23</div>
+        <div class="sec-cap reveal">2024 — 2026 / 7 transmissions</div>
     </div>
     <div class="work">
         <div class="work-inner">
@@ -1342,18 +1334,12 @@ footer {
 <!-- INTAKE -->
 <section id="intake" class="intake">
     <div class="intake-inner">
-        <div class="intake-availability reveal">
-            <span class="dot"></span>
-            <span class="open">Q3 — open</span>
-            <span style="color:var(--dim)">/</span>
-            <span>02 of 03 places remaining</span>
-        </div>
         <h2 class="intake-headline reveal">
             Send a<br>
             <em>transmission.</em>
         </h2>
-        <a href="mailto:transmissions@arcturian.studio" class="intake-cta reveal">
-            transmissions@arcturian.studio <span class="arrow">→</span>
+        <a href="https://arcturianstudios.com" class="intake-cta reveal">
+            arcturianstudios.com <span class="arrow">→</span>
         </a>
         <div class="intake-foot reveal">
             or <a href="#">book a 20 min call</a>
@@ -1395,6 +1381,79 @@ const io = new IntersectionObserver((entries) => {
     });
 }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// ─── Project helix ────────────────────────────────────────────
+(function () {
+    const section = document.getElementById('work');
+    const stage = document.querySelector('.work-grid');
+    const cards = Array.from(document.querySelectorAll('.work-grid .tile'));
+    if (!section || !stage || !cards.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop = () => window.matchMedia('(min-width: 901px)').matches && !reduceMotion;
+    let ticking = false;
+
+    function clamp(n, min, max) {
+        return Math.max(min, Math.min(max, n));
+    }
+
+    function layout() {
+        section.style.setProperty('--project-count', String(cards.length));
+
+        if (!isDesktop()) {
+            cards.forEach(card => {
+                card.style.transform = '';
+                card.style.opacity = '';
+                card.style.filter = '';
+                card.style.zIndex = '';
+            });
+            return;
+        }
+
+        const rect = section.getBoundingClientRect();
+        const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
+        const progress = clamp(-rect.top / travel, 0, 1) * (cards.length - 1);
+        const viewport = Math.min(window.innerWidth, window.innerHeight);
+        const radius = clamp(viewport * 0.42, 280, 520);
+        const depth = clamp(viewport * 0.34, 240, 460);
+
+        cards.forEach((card, i) => {
+            const offset = i - progress;
+            const angle = offset * 62;
+            const rad = angle * Math.PI / 180;
+            const x = Math.sin(rad) * radius;
+            const y = offset * 82;
+            const z = Math.cos(rad) * depth - depth;
+            const distance = Math.abs(offset);
+            const scale = clamp(1 - distance * 0.085, 0.7, 1);
+            const opacity = clamp(1 - distance * 0.18, 0.16, 1);
+            const blur = Math.min(distance * 1.2, 5);
+
+            card.style.transform = [
+                `translate3d(${x}px, ${y}px, ${z}px)`,
+                `rotateY(${-angle}deg)`,
+                `rotateX(${clamp(offset * -3, -12, 12)}deg)`,
+                `scale(${scale})`
+            ].join(' ');
+            card.style.opacity = opacity.toFixed(3);
+            card.style.filter = `blur(${blur}px) saturate(${clamp(1 - distance * 0.06, 0.72, 1)})`;
+            card.style.zIndex = String(1000 - Math.round(distance * 100));
+        });
+    }
+
+    function requestLayout() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            ticking = false;
+            layout();
+        });
+    }
+
+    window.addEventListener('scroll', requestLayout, { passive: true });
+    window.addEventListener('resize', requestLayout);
+    layout();
+})();
 
 // ─── Background music ────────────────────────────────────────
 // Browsers only allow audible playback reliably inside a real user
