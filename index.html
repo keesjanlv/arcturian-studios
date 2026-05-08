@@ -1330,19 +1330,19 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
         const isTablet = window.innerWidth > 520 && window.innerWidth <= 900;
         const isTouch = window.matchMedia('(pointer: coarse)').matches;
         const radius = isMobile
-            ? clamp(viewport * 0.36, 150, 235)
+            ? clamp(viewport * 0.42, 170, 260)
             : isTablet
-                ? clamp(viewport * 0.48, 300, 460)
+                ? clamp(viewport * 0.52, 330, 500)
                 : clamp(viewport * 0.58, 500, 760);
         const depth = isMobile
-            ? clamp(viewport * 0.48, 190, 300)
+            ? clamp(viewport * 0.54, 220, 330)
             : isTablet
-                ? clamp(viewport * 0.52, 300, 500)
+                ? clamp(viewport * 0.58, 340, 540)
                 : clamp(viewport * 0.58, 460, 760);
-        const turn = isMobile ? 42 : isTablet ? 54 : 64;
-        const verticalStep = isMobile ? 104 : isTablet ? 124 : 142;
-        const minScale = isMobile ? 0.54 : isTablet ? 0.5 : 0.5;
-        const fadeRate = isMobile ? 0.5 : isTablet ? 0.4 : 0.36;
+        const turn = isMobile ? 48 : isTablet ? 58 : 64;
+        const verticalStep = isMobile ? 132 : isTablet ? 150 : 142;
+        const minScale = isMobile ? 0.44 : isTablet ? 0.46 : 0.5;
+        const fadeRate = isMobile ? 0.62 : isTablet ? 0.5 : 0.36;
 
         cards.forEach((card, i) => {
             const offset = i - progress;
@@ -1352,7 +1352,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
             const y = offset * verticalStep;
             const z = Math.cos(rad) * depth - depth;
             const distance = Math.abs(offset);
-            const scale = clamp(1 - distance * 0.16, minScale, 1);
+            const scale = clamp(1 - distance * (isTouch ? 0.22 : 0.16), minScale, 1);
             const opacity = clamp(1 - distance * fadeRate, 0.05, 1);
             const blur = isTouch ? 0 : Math.min(distance * 2.2, 8);
             const saturation = isTouch ? clamp(1 - distance * 0.1, 0.62, 1) : clamp(1 - distance * 0.06, 0.72, 1);
